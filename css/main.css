@@ -125,17 +125,13 @@ img {
 .cart_content .total {
   width: 100%;
 }
-ul.checkout {
-  padding: 20px 15px 20px 0;
+.checkout_content {
   width: 100%;
-  max-height: 460px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
 }
-ul.checkout .total_price {
+.checkout_content .total_price {
+  margin: 0 0 10px;
   border-bottom: 1px solid var(--dark);
-  padding: 0 0 15px 0;
+  padding: 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -143,8 +139,16 @@ ul.checkout .total_price {
   font-size: 20px;
   text-transform: uppercase;
 }
-ul.checkout .total_price span:first-child {
+.checkout_content .total_price span:first-child {
   color: var(--dark);
+}
+ul.checkout {
+  padding: 20px 15px 20px 0;
+  width: 100%;
+  max-height: 370px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 ul.checkout li {
   padding: 15px 0;
