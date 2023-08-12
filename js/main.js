@@ -24,12 +24,10 @@ cart.addEventListener('click', () => {
   overlay.classList.toggle('active')
 })
 
-
-products.forEach((item, id) => {
-  
+products.forEach((item,index) => {
   function showCheckout() {
     checkout.innerHTML = ''
-    checkoutList.forEach(datas => {
+    checkoutList.forEach((datas,id) => {
       checkout.innerHTML += `
         <li>
         <img
@@ -50,29 +48,30 @@ products.forEach((item, id) => {
     e.stopPropagation()
     if (e.target.tagName === "BUTTON") {
       checkoutList.push({
-        name: productName[id].innerHTML,
-        price: +productPrice[id].innerHTML.replace(' USD',''),
-        image: productImg[id].getAttribute('src')
+        name: productName[index].innerHTML,
+        price: +productPrice[index].innerHTML.replace(' USD',''),
+        image: productImg[index].getAttribute('src')
       })
 
-      localStorage.setItem('totalPrice',+(totalPrice += (productPrice[id].innerHTML.replace(' USD',''))*1)) 
+      localStorage.setItem('totalPrice',+(totalPrice += (productPrice[index].innerHTML.replace(' USD',''))*1)) 
       localStorage.setItem('checkoutList', JSON.stringify(checkoutList))
       showCheckout()
       checkoutPrice.innerHTML = `${localStorage.getItem('totalPrice')} USD`
     }
   })
   checkoutPrice.innerHTML = `${localStorage.getItem('totalPrice')} USD`
-  return showCheckout()
+  return showCheckout(),checkoutPrice
 })
-function removeItem() {
+
+
+function removeItem(id) {
   let checkoutItem = document.querySelectorAll('ul.checkout>li')
-  checkoutItem.forEach((element,id) => {
-    element.addEventListener('click', () => {
-      element.remove()
-      checkoutList.splice(id, 1)
-      console.log(checkoutList);
-      localStorage.setItem('totalPrice', totalPrice)
-      localStorage.setItem('checkoutList', JSON.stringify(checkoutList))
-    })
-  })
+  if (id !== checkoutItem[id]) {
+    checkoutList.splice(id, 1)
+    totalPrice -= (+productPrice[id].innerHTML.replace(' USD', ''))
+    localStorage.setItem('totalPrice', totalPrice)
+    localStorage.setItem('checkoutList', JSON.stringify(checkoutList))
+    console.log(checkoutList);
+    console.log(totalPrice);
+  }
 }
